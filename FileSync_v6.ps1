@@ -1,5 +1,5 @@
-#Autor: [redacted for privacy]
-#Date: [redacted for privacy]
+#Autor: [redacted]
+#Date: [redacted]
 #Description: This is a script to sync files from one folder to another with other options like logging and reconfiguring the source and destination path.
 #Version: 0.0.0.6
 #############################################
@@ -581,7 +581,7 @@ function startup
     }
     else
     {
-        Write-Host "This script is designed to sync files from one folder to another with other options like logging and reconfiguring the source and destination path and many other more.`n"
+        Write-Host "This script is designed to sync files from one folder to another with other options like logging and reconfiguring the source and destination path and many more.`n"
         Read-Host "Press Enter to continue..."
         setup -options 1
         startup
