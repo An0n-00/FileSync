@@ -28,33 +28,33 @@
 [ string ] $00010 = "[all contents] [Source to Destination] [without deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
 [ string ] $00011 = "[all contents] [Source to Destination] [without deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $00100 = "[all contents] [Source to Destination] [deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
-[ string ] $00101 = "[all contents] [Source to Destination] [deleting files and directories that no longer exist in the source] [keeping all file information] /move"
+[ string ] $00101 = "[all contents] [Source to Destination] [deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $00110 = "[all contents] [Source to Destination] [deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
-[ string ] $00111 = "[all contents] [Source to Destination] [deleting files and directories that no longer exist in the source] [deleting all file information] /move"
+[ string ] $00111 = "[all contents] [Source to Destination] [deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $01000 = "[all contents] [Destination to Source] [without deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
 [ string ] $01001 = "[all contents] [Destination to Source] [without deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $01010 = "[all contents] [Destination to Source] [without deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
 [ string ] $01011 = "[all contents] [Destination to Source] [without deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $01100 = "[all contents] [Destination to Source] [deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
-[ string ] $01101 = "[all contents] [Destination to Source] [deleting files and directories that no longer exist in the source] [keeping all file information] /move"
+[ string ] $01101 = "[all contents] [Destination to Source] [deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $01110 = "[all contents] [Destination to Source] [deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
-[ string ] $01111 = "[all contents] [Destination to Source] [deleting files and directories that no longer exist in the source] [deleting all file information] /move"
+[ string ] $01111 = "[all contents] [Destination to Source] [deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $10000 = "[level 1 only] [Source to Destination] [without deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
 [ string ] $10001 = "[level 1 only] [Source to Destination] [without deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $10010 = "[level 1 only] [Source to Destination] [without deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
 [ string ] $10011 = "[level 1 only] [Source to Destination] [without deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $10100 = "[level 1 only] [Source to Destination] [deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
-[ string ] $10101 = "[level 1 only] [Source to Destination] [deleting files and directories that no longer exist in the source] [keeping all file information] /move"
+[ string ] $10101 = "[level 1 only] [Source to Destination] [deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $10110 = "[level 1 only] [Source to Destination] [deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
-[ string ] $10111 = "[level 1 only] [Source to Destination] [deleting files and directories that no longer exist in the source] [deleting all file information] /move"
+[ string ] $10111 = "[level 1 only] [Source to Destination] [deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $11000 = "[level 1 only] [Destination to Source] [without deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
 [ string ] $11001 = "[level 1 only] [Destination to Source] [without deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $11010 = "[level 1 only] [Destination to Source] [without deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
 [ string ] $11011 = "[level 1 only] [Destination to Source] [without deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 [ string ] $11100 = "[level 1 only] [Destination to Source] [deleting files and directories that no longer exist in the source] [keeping all file information] [copying files and directories]"
-[ string ] $11101 = "[level 1 only] [Destination to Source] [deleting files and directories that no longer exist in the source] [keeping all file information] /move"
+[ string ] $11101 = "[level 1 only] [Destination to Source] [deleting files and directories that no longer exist in the source] [keeping all file information] [moving files and directories]"
 [ string ] $11110 = "[level 1 only] [Destination to Source] [deleting files and directories that no longer exist in the source] [deleting all file information] [copying files and directories]"
-[ string ] $11111 = "[level 1 only] [Destination to Source] [deleting files and directories that no longer exist in the source] [deleting all file information] /move"
+[ string ] $11111 = "[level 1 only] [Destination to Source] [deleting files and directories that no longer exist in the source] [deleting all file information] [moving files and directories]"
 # End of SyncOptions
 # End of Variables
 
@@ -169,38 +169,38 @@ function PreSync
     {
         log -logtype 1 -logMessage "Log: FileSync proceeded."
 
-        [ string ] $robocopy_00000 = "robocopy.exe $sourcepath $destinationpath /e  /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00001 = "robocopy.exe $sourcepath $destinationpath /e  /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00010 = "robocopy.exe $sourcepath $destinationpath /e  /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00011 = "robocopy.exe $sourcepath $destinationpath /e  /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00100 = "robocopy.exe $sourcepath $destinationpath /e /purge /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00101 = "robocopy.exe $sourcepath $destinationpath /e /purge /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00110 = "robocopy.exe $sourcepath $destinationpath /e /purge /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_00111 = "robocopy.exe $sourcepath $destinationpath /e /purge /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01000 = "robocopy.exe $destinationpath $sourcepath /e  /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01001 = "robocopy.exe $destinationpath $sourcepath /e  /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01010 = "robocopy.exe $destinationpath $sourcepath /e  /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01011 = "robocopy.exe $destinationpath $sourcepath /e  /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01100 = "robocopy.exe $destinationpath $sourcepath /e /purge /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01101 = "robocopy.exe $destinationpath $sourcepath /e /purge /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01110 = "robocopy.exe $destinationpath $sourcepath /e /purge /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_01111 = "robocopy.exe $destinationpath $sourcepath /e /purge /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10000 = "robocopy.exe $sourcepath $destinationpath /lev:1  /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10001 = "robocopy.exe $sourcepath $destinationpath /lev:1  /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10010 = "robocopy.exe $sourcepath $destinationpath /lev:1  /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10011 = "robocopy.exe $sourcepath $destinationpath /lev:1  /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10100 = "robocopy.exe $sourcepath $destinationpath /lev:1 /purge /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10101 = "robocopy.exe $sourcepath $destinationpath /lev:1 /purge /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10110 = "robocopy.exe $sourcepath $destinationpath /lev:1 /purge /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_10111 = "robocopy.exe $sourcepath $destinationpath /lev:1 /purge /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11000 = "robocopy.exe $destinationpath $sourcepath /lev:1  /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11001 = "robocopy.exe $destinationpath $sourcepath /lev:1  /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11010 = "robocopy.exe $destinationpath $sourcepath /lev:1  /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11011 = "robocopy.exe $destinationpath $sourcepath /lev:1  /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11100 = "robocopy.exe $destinationpath $sourcepath /lev:1 /purge /copy:datxso /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11101 = "robocopy.exe $destinationpath $sourcepath /lev:1 /purge /copy:datxso /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11110 = "robocopy.exe $destinationpath $sourcepath /lev:1 /purge /nocopy /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
-        [ string ] $robocopy_11111 = "robocopy.exe $destinationpath $sourcepath /lev:1 /purge /nocopy /move /r:0 /w:0 /np /log+:$logFilePath /tee /eta "
+        [ string ] $robocopy_00000 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e  /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00001 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e  /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00010 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e  /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00011 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e  /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00100 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e /purge /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00101 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e /purge /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00110 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e /purge /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_00111 = "robocopy.exe ""$sourcepath"" ""$destinationpath"" /e /purge /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01000 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e  /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01001 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e  /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01010 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e  /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01011 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e  /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01100 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e /purge /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01101 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e /purge /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01110 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e /purge /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_01111 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /e /purge /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10000 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1  /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10001 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1  /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10010 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1  /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10011 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1  /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10100 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1 /purge /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10101 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1 /purge /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10110 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1 /purge /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_10111 = "robocopy.exe ""$sourcepath ""$destinationpath"" /lev:1 /purge /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11000 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1  /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11001 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1  /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11010 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1  /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11011 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1  /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11100 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1 /purge /copy:datxso /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11101 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1 /purge /copy:datxso /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11110 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1 /purge /nocopy /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
+        [ string ] $robocopy_11111 = "robocopy.exe ""$destinationpath"" ""$sourcepath"" /lev:1 /purge /nocopy /mov /r:0 /w:0 /np /log+:""$logFilePath"" /tee /eta "
 
         Clear-Host
         #Question 1 - Copy only the top directory or all contents
@@ -224,12 +224,11 @@ function PreSync
             }
         } until (($syncoptions -eq "0" -or $syncoptions -eq "1" ) -and $syncoptions.Length -eq 1)
 
-
         #Question 2 - Copy/Move from (A to B) or (B to A)
         Write-Host "`n`nDo you want to copy/move the contents from: `n(0): sourcepath to destinationpath `nor `n(1): destinationpath to sourcepath`n`nSourcepath being: $sourcepath`nDestinationpath being: $destinationpath`n`n" -ForegroundColor Yellow
         do
         {
-            $syncoptions += Read-Host "Enter 0 = source to destination or 1 = destination to source"
+            $syncoptions += Read-Host "Enter 0 = source to destination or 1 = destination to source" -
             if ( $syncoptions[ - 1 ] -eq "0" )
             {
                 log -logtype 1 -logMessage "Log: FileSync: Copying/moving from Source ($sourcepath) to Destination ($destinationpath)"
@@ -243,7 +242,6 @@ function PreSync
                 log -logtype 1 -logMessage "Log: FileSync: Invalid input in SyncOptions"
                 Write-Host "Invalid input. Try again`n" -ForegroundColor Red
                 $syncoptions.Substring(0, $string.Length - 1)
-
             }
         } until (($syncoptions[ - 1 ] -eq "0" -or $syncoptions[ - 1 ] -eq "1" ) -and $syncoptions.Length -eq 2)
 
