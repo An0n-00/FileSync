@@ -1,0 +1,923 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-03-15T19:27:39.8069197"><title>Script | FileSync</title><script type="application/json" id="virtual-toc-data">[]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.6.6-b224/app.css" rel="stylesheet"><link rel="manifest" href="site.webmanifest"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Script | FileSync"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="FileSync Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/https://an0n-00.github.io/FileSync/0.0.0.6/script.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Script | FileSync"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/https://an0n-00.github.io/FileSync/0.0.0.6/script.html#webpage",
+    "url": "writerside-documentation/https://an0n-00.github.io/FileSync/0.0.0.6/script.html",
+    "name": "Script | FileSync",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentationhttps://an0n-00.github.io/FileSync/#website",
+    "url": "writerside-documentationhttps://an0n-00.github.io/FileSync/",
+    "name": "FileSync Help"
+}</script><!-- End Schema.org --></head><body data-id="Script" data-main-title="Script" data-article-props="{&quot;seeAlso&quot;:[{&quot;title&quot;:&quot;Related&quot;,&quot;links&quot;:[{&quot;url&quot;:&quot;documentation.html&quot;,&quot;text&quot;:&quot;Documentation&quot;,&quot;tooltip&quot;:&quot;We decided to do a FileSync script with advanced features in order to achieve the best possible grade.&quot;,&quot;description&quot;:&quot;We decided to do a FileSync script with advanced features in order to achieve the best possible grade.&quot;}]},{&quot;title&quot;:&quot;External&quot;,&quot;links&quot;:[{&quot;url&quot;:&quot;https://www.github.com/an0n-00/FileSync&quot;,&quot;text&quot;:&quot;Github&quot;},{&quot;url&quot;:&quot;https://www.bwz-rappi.ch&quot;,&quot;text&quot;:&quot;BWZ-Rappi&quot;}]}],&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>FileSync 0.0.0.6 Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Script" id="Script.md">Script</h1><p id="vdjcge_242">Here you will find our script:</p><div class="code-collapse" data-lang="none" data-is-expanded="false" data-synopsis="Script" data-disable-link-processing="true">
+#Author: Group 4
+#Date: 06.03.2024
+#Description: This is a script to sync files from one folder to another with other options like logging and reconfiguring the source and destination path. This script is designed to sync files from one folder to another with other options like logging and reconfiguring the source and destination path. The script provides a menu for the user to choose from various options such as syncing now, viewing current configuration, reconfiguring, opening log, and help. The user can also choose to remove all information or exit the script. The script uses the robocopy command for file synchronization.
+# Version: 0.0.0.6
+#############################################
+# Variables
+[int] $menuinput # User input for menu selection
+[string] $syncoptions # Sync options
+# Project related variables
+[string] $ProjectName = &quot;FileSync&quot;
+[string] $ProjectVersion = &quot;0.0.0.6&quot;
+[string] $Tempfolder = [Environment]::GetFolderPath( 'LocalApplicationData' ) + &quot;\FileSync&quot;
+# Source and destination paths for file synchronization
+[string] $Sourcepath = &quot;&quot;
+[string] $Destinationpath = &quot;&quot;
+# File paths for settings and logs
+[string] $settingsFilePath = &quot;$Tempfolder\Settings.dll&quot;
+[string] $ErrorLogFilePath = &quot;$Tempfolder\ErrorLog.log&quot;
+[string] $logFilePath = &quot;$Tempfolder\FileSync.log&quot;
+[string] $logMessage
+[int] $corrupted
+# Sync options as strings
+[string] $00000 = &quot;[all contents]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $00001 = &quot;[all contents]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $00010 = &quot;[all contents]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $00011 = &quot;[all contents]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $00100 = &quot;[all contents]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $00101 = &quot;[all contents]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $00110 = &quot;[all contents]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $00111 = &quot;[all contents]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $01000 = &quot;[all contents]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $01001 = &quot;[all contents]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $01010 = &quot;[all contents]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $01011 = &quot;[all contents]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $01100 = &quot;[all contents]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $01101 = &quot;[all contents]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $01110 = &quot;[all contents]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $01111 = &quot;[all contents]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $10000 = &quot;[level 1 only]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $10001 = &quot;[level 1 only]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $10010 = &quot;[level 1 only]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $10011 = &quot;[level 1 only]`n[Source to Destination]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $10100 = &quot;[level 1 only]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $10101 = &quot;[level 1 only]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $10110 = &quot;[level 1 only]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $10111 = &quot;[level 1 only]`n[Source to Destination]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $11000 = &quot;[level 1 only]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $11001 = &quot;[level 1 only]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $11010 = &quot;[level 1 only]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $11011 = &quot;[level 1 only]`n[Destination to Source]`n[without deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+[string] $11100 = &quot;[level 1 only]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[copying files and directories]&quot;
+[string] $11101 = &quot;[level 1 only]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[keeping all file information]`n[moving files and directories]&quot;
+[string] $11110 = &quot;[level 1 only]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[copying files and directories]&quot;
+[string] $11111 = &quot;[level 1 only]`n[Destination to Source]`n[deleting files and directories that no longer exist in the source]`n[deleting all file information]`n[moving files and directories]&quot;
+# End of SyncOptions
+# End of Variables
+#Functions
+function menu
+{
+    # This function provides a menu for the user to choose from various options.
+    # The options include syncing now, viewing current configuration, reconfiguring, opening log, and help.
+    # The user can also choose to remove all information or exit the script.
+    do
+    {
+        log -logtype 1 -logMessage &quot;Log: Menu opened&quot;
+        clear-host
+        Write-Host &quot;`n===========================================&quot;
+        Write-Host &quot;| $ProjectName (ver.$ProjectVersion)                  |&quot;
+        Write-Host &quot;|_________________________________________|&quot;
+        Write-Host &quot;| (1) Sync now                            |&quot;
+        Write-Host &quot;| (2) Current Configuration               |&quot;
+        Write-Host &quot;| (3) Reconfigure                         |&quot;
+        Write-Host &quot;| (4) Open Log                            |&quot;
+        Write-Host &quot;| (5) Sourcecode                          |&quot;
+        Write-Host &quot;|                                         |&quot;
+        Write-Host &quot;| (95) Remove all Information             |&quot;
+        Write-Host &quot;| (99) Exit                               |&quot;
+        Write-Host &quot;|_________________________________________|`n&quot;
+        $menuinput = read-host &quot;Please select an option&quot;
+        switch ( $menuinput )
+        {
+            1
+            {
+                log -logtype 1 -logMessage &quot;Log: Sync started&quot;
+                PreSync
+            }
+            2
+            {
+                log -logtype 1 -logMessage &quot;Log: Printing current Configuration&quot;
+                Write-Host &quot;`nSourcepath:`n$Sourcepath`n`nDestinationpath:`n$Destinationpath`n&quot; -ForegroundColor Yellow
+                Read-Host &quot;Press Enter to return to menu...&quot;
+            }
+            3
+            {
+                log -logtype 1 -logMessage &quot;Log: Reconfigure started&quot;
+                write-host &quot;`nCurrent assigned sourcepath: $sourcepath`nCurrent assigned destinationpath: $destinationpath&quot; -ForegroundColor Yellow
+                setup -options 3
+                setup -options 2
+            }
+            4
+            {
+                log -logtype 1 -logMessage &quot;Log: Log printed to Console&quot;
+                printlog
+            }
+            5
+            {
+                log -logtype 1 -logMessage &quot;Log: Help printed to Console&quot;
+                printhelp
+            }
+            95
+            {
+                log -logtype 1 -logMessage &quot;Log: Remove all Information started&quot;
+                Write-Host &quot;READ BEFORE YOU ENTER`nYou are about to remove all information.`n`nIf you restart the script, you will be asked to reconfigure the settings and the script will automatically create the resource folders again.&quot; -ForegroundColor Red
+                $u_sure = Read-Host &quot;`nAre you sure? (y/n)&quot;
+                if ( $u_sure -eq &quot;y&quot; )
+                {
+                    try
+                    {
+                        Remove-Item -Path $Tempfolder -Recurse -Force
+                    }
+                    catch
+                    {
+                        log -logtype 2 -logMessage = &quot;Error: Removing the Tempfolder failed. Going back to Menu&quot;
+                        Write-Host &quot;Error: Removing the Tempfolder failed. Going back to Menu`nYou try to remove the folder manually. Path: $Tempfolder&quot; -ForegroundColor Red
+                        Start-Sleep -Seconds 4
+                        menu
+                    }
+                    Write-Host &quot;`nAll Information removed. Exiting in 3 seconds...&quot; -ForegroundColor Green
+                    Start-Sleep -Seconds 3
+                    exit
+                }
+                else
+                {
+                    log -logtype 1 -logMessage &quot;Log: Remove all Information aborted&quot;
+                    Write-Host &quot;`nAborted. Going back to Menu in 1 second...&quot; -ForegroundColor Red
+                    Start-Sleep -Seconds 1
+                }
+            }
+            99
+            {
+                Write-Host &quot;Bye!&quot;
+                log -logtype 1 -logMessage &quot;End: FileSync exited successfully&quot;
+                Start-Sleep -Seconds 1
+                exit
+            }
+            default
+            {
+                log -logtype 1 -logMessage &quot;Log: Invalid input in Menu&quot;
+                write-host &quot;Invalid input. Try again&quot;
+                Write-host &quot;To exit, enter 99&quot; -ForegroundColor Red
+                Start-Sleep -Milliseconds 1500
+            }
+        }
+        $menuinput = 0
+    }until (0 -eq 1)
+}
+function PreSync
+{
+    # This function prepares for file synchronization.
+    # It asks the user for various options such as whether to sync all contents or the first level only,
+    # whether to copy/move the contents from source to destination or vice versa,
+    # whether to delete the destination files that no longer exist in the source,
+    # whether to keep or remove all information about the files, and whether to copy or move files and directories.
+    # Based on the user's choices, it prepares the appropriate robocopy command for file synchronization.
+    $syncoptions = &quot;&quot;
+    Write-Host &quot;`nYou are going to Sync files now. If you want to exit, enter q, if you want to proceed, enter. `n&quot;
+    Write-Host &quot;Note: You will not be able to change the source and destinationpath until you have finished the sync.&quot; -ForegroundColor DarkYellow
+    Write-Host &quot;Note: You will not be able to exit the script during the sync. If you want to exit, exit now or after the sync configuration.&quot; -ForegroundColor DarkYellow
+    $syncconfirmation = Read-Host &quot;`nEnter p = proceed or q = exit&quot;
+    if ( $syncconfirmation -eq &quot;p&quot; ) #if p
+    {
+        log -logtype 1 -logMessage &quot;Log: FileSync proceeded.&quot;
+        [string] $robocopy_00000 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e  /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00001 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e  /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00010 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e  /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00011 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e  /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00100 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e /purge /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00101 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e /purge /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00110 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e /purge /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_00111 = &quot;robocopy.exe &quot;&quot;$sourcepath&quot;&quot; &quot;&quot;$destinationpath&quot;&quot; /e /purge /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01000 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e  /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01001 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e  /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01010 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e  /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01011 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e  /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01100 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e /purge /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01101 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e /purge /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01110 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e /purge /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_01111 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /e /purge /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10000 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1  /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10001 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1  /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10010 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1  /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10011 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1  /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10100 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1 /purge /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10101 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1 /purge /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10110 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1 /purge /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_10111 = &quot;robocopy.exe &quot;&quot;$sourcepath &quot;&quot;$destinationpath&quot;&quot; /lev:1 /purge /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11000 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1  /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11001 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1  /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11010 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1  /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11011 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1  /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11100 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1 /purge /copy:datxso /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11101 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1 /purge /copy:datxso /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11110 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1 /purge /nocopy /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        [string] $robocopy_11111 = &quot;robocopy.exe &quot;&quot;$destinationpath&quot;&quot; &quot;&quot;$sourcepath&quot;&quot; /lev:1 /purge /nocopy /mov /r:0 /w:0 /np /log+:&quot;&quot;$logFilePath&quot;&quot; /tee /eta &quot;
+        Clear-Host
+        #Question 1 - Copy only the top directory or all contents
+        Write-Host &quot;Do you want to sync, all contents (0) or the first level only (1)?&quot; -ForegroundColor Yellow
+        do
+        {
+            $syncoptions += Read-Host &quot;`n0 = All`nor`n1 = Level 1 Files only`n`nEnter your option&quot;
+            if ( $syncoptions -eq &quot;0&quot; )
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Syncing all contents&quot;
+            }
+            elseif ($syncoptions -eq &quot;1&quot;)
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Syncing level 1 only&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Invalid input in SyncOptions question 1 ($syncoptions)&quot;
+                Write-Host &quot;Invalid input. Try again`n&quot; -ForegroundColor Red
+                $syncoptions = &quot;&quot;
+            }
+        } until (($syncoptions -eq &quot;0&quot; -or $syncoptions -eq &quot;1&quot; ) -and $syncoptions.Length -eq 1)
+        #Question 2 - Copy/Move from (A to B) or (B to A)
+        Write-Host &quot;`n`nDo you want to copy/move the contents from: `n(0): sourcepath to destinationpath `nor `n(1): destinationpath to sourcepath`n`nSourcepath being: $sourcepath`nDestinationpath being: $destinationpath`n&quot; -ForegroundColor Yellow
+        do
+        {
+            $syncoptions += Read-Host &quot;0 = source to destination`nor`n1 = destination to source`n`nEnter your option&quot;
+            if ( $syncoptions[- 1] -eq &quot;0&quot; )
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Copying/moving from Source ($sourcepath) to Destination ($destinationpath)&quot;
+            }
+            elseif ($syncoptions[- 1] -eq &quot;1&quot;)
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Copying/moving from Destination ($destinationpath) to Source ($sourcepath)&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Invalid input in SyncOptions&quot;
+                Write-Host &quot;Invalid input. Try again`n&quot; -ForegroundColor Red
+                $syncoptions.Substring(0, $string.Length - 1)
+            }
+        } until (($syncoptions[- 1] -eq &quot;0&quot; -or $syncoptions[- 1] -eq &quot;1&quot; ) -and $syncoptions.Length -eq 2)
+        #Question 3 - Delete files and directories that no longer exist in the source?
+        Write-Host &quot;`n`nDo you want to delete the destination files (and directories) that no longer exist in the source? (but still do in the destination)&quot; -ForegroundColor Yellow
+        Write-Host &quot;`nNote: source and destination is relative in this question, meaning it depends from where to where you are moving/copying your contents and NOT what you have set in the configuration.&quot; -ForegroundColor DarkYellow
+        do
+        {
+            $syncoptions += Read-Host &quot;`n0 = No`nor`n1 = Yes`n`nEnter your option&quot;
+            if ( $syncoptions[- 1] -eq &quot;0&quot; )
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Not deleting files and directories that no longer exist in the source&quot;
+            }
+            elseif ($syncoptions[- 1] -eq &quot;1&quot;)
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Deleting files and directories that no longer exist in the source&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Invalid input in SyncOptions&quot;
+                Write-Host &quot;Invalid input. Try again`n&quot; -ForegroundColor Red
+                $syncoptions.Substring(0, $string.Length - 1)
+            }
+        }until (($syncoptions[- 1] -eq &quot;1&quot; -or $syncoptions[- 1] -eq &quot;0&quot; ) -and $syncoptions.Length -eq 3)
+        #Question 4 - Keep or remove all information about the file
+        Write-Host &quot;`n`nDo you want to keep (0) or remove (1) ALL information ABOUT the files (and directories)?`n&quot; -ForegroundColor Yellow
+        do
+        {
+            $syncoptions += Read-Host &quot;0 = keep information`nor`n1 = remove information`n`nEnter your option&quot;
+            if ( $syncoptions[- 1] -eq &quot;0&quot; )
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Keeping all information about the file&quot;
+            }
+            elseif ($syncoptions[- 1] -eq &quot;1&quot;)
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Removing all information about the file&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Invalid input in SyncOptions&quot;
+                Write-Host &quot;Invalid input. Try again&quot; -ForegroundColor Red
+                $syncoptions.Substring(0, $string.Length - 1)
+            }
+        }until (($syncoptions[- 1] -eq &quot;0&quot; -or $syncoptions[- 1] -eq &quot;1&quot; ) -and $syncoptions.Length -eq 4)
+        #Question 5 - Move or Copy files and directories
+        Write-Host &quot;`n`nDo you want to copy (0) or move (1) files and (directories)?&quot; -ForegroundColor Yellow
+        do
+        {
+            $syncoptions += Read-Host &quot;`n0 = copy`nor`n1 = move`n`nEnter your option&quot;
+            if ( $syncoptions[- 1] -eq &quot;0&quot; )
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Copying files and/or directories&quot;
+            }
+            elseif ($syncoptions[- 1] -eq &quot;1&quot;)
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Moving files and/or directories&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: FileSync: Invalid input in SyncOptions&quot;
+                Write-Host &quot;Invalid input. Try again&quot; -ForegroundColor Red
+            }
+        }until (($syncoptions[- 1] -eq &quot;0&quot; -or $syncoptions[- 1] -eq &quot;1&quot; ) -and $syncoptions.Length -eq 5)
+        Clear-Host
+        #Starting sync with the given options
+        #Documentation https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy
+        [int] $syncpassed
+        switch ( $syncoptions )
+        {
+            &quot;00000&quot;
+            {
+                FileSync -run_what $robocopy_00000 -write_what $00000
+            }
+            &quot;00001&quot;
+            {
+                FileSync -run_what $robocopy_00001 -write_what $00001
+            }
+            &quot;00010&quot;
+            {
+                FileSync -run_what $robocopy_00010 -write_what $00010
+            }
+            &quot;00011&quot;
+            {
+                FileSync -run_what $robocopy_00011 -write_what $00011
+            }
+            &quot;00100&quot;
+            {
+                FileSync -run_what $robocopy_00100 -write_what $00100
+            }
+            &quot;00101&quot;
+            {
+                FileSync -run_what $robocopy_00101 -write_what $00101
+            }
+            &quot;00110&quot;
+            {
+                FileSync -run_what $robocopy_00110 -write_what $00110
+            }
+            &quot;00111&quot;
+            {
+                FileSync -run_what $robocopy_00111 -write_what $00111
+            }
+            &quot;01000&quot;
+            {
+                FileSync -run_what $robocopy_01000 -write_what $01000
+            }
+            &quot;01001&quot;
+            {
+                FileSync -run_what $robocopy_01001 -write_what $01001
+            }
+            &quot;01010&quot;
+            {
+                FileSync -run_what $robocopy_01010 -write_what $01010
+            }
+            &quot;01011&quot;
+            {
+                FileSync -run_what $robocopy_01011 -write_what $01011
+            }
+            &quot;01100&quot;
+            {
+                FileSync -run_what $robocopy_01100 -write_what $01100
+            }
+            &quot;01101&quot;
+            {
+                FileSync -run_what $robocopy_01101 -write_what $01101
+            }
+            &quot;01110&quot;
+            {
+                FileSync -run_what $robocopy_01110 -write_what $01110
+            }
+            &quot;01111&quot;
+            {
+                FileSync -run_what $robocopy_01111 -write_what $01111
+            }
+            &quot;10000&quot;
+            {
+                FileSync -run_what $robocopy_10000 -write_what $10000
+            }
+            &quot;10001&quot;
+            {
+                FileSync -run_what $robocopy_10001 -write_what $10001
+            }
+            &quot;10010&quot;
+            {
+                FileSync -run_what $robocopy_10010 -write_what $10010
+            }
+            &quot;10011&quot;
+            {
+                FileSync -run_what $robocopy_10011 -write_what $10011
+            }
+            &quot;10100&quot;
+            {
+                FileSync -run_what $robocopy_10100 -write_what $10100
+            }
+            &quot;10101&quot;
+            {
+                FileSync -run_what $robocopy_10101 -write_what $10101
+            }
+            &quot;10110&quot;
+            {
+                FileSync -run_what $robocopy_10110 -write_what $10110
+            }
+            &quot;10111&quot;
+            {
+                FileSync -run_what $robocopy_10111 -write_what $10111
+            }
+            &quot;11000&quot;
+            {
+                FileSync -run_what $robocopy_11000 -write_what $11000
+            }
+            &quot;11001&quot;
+            {
+                FileSync -run_what $robocopy_11001 -write_what $11001
+            }
+            &quot;11010&quot;
+            {
+                FileSync -run_what $robocopy_11010 -write_what $11010
+            }
+            &quot;11011&quot;
+            {
+                FileSync -run_what $robocopy_11011 -write_what $11011
+            }
+            &quot;11100&quot;
+            {
+                FileSync -run_what $robocopy_11100 -write_what $11100
+            }
+            &quot;11101&quot;
+            {
+                FileSync -run_what $robocopy_11101 -write_what $11101
+            }
+            &quot;11110&quot;
+            {
+                FileSync -run_what $robocopy_11110 -write_what $11110
+            }
+            &quot;11111&quot;
+            {
+                FileSync -run_what $robocopy_11111 -write_what $11111
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Error: Invalid sync confirmation in FileSync. Returning to FileSync Menu&quot;
+                log -logtype 2 -logMessage &quot;Error: Invalid sync confirmation {$syncoptions} in FileSync.&quot;
+                Write-Host &quot;Error! Returning to FileSync Menu.&quot; -ForegroundColor Red
+                ${script:syncoptions} = $null
+                ${script:syncpassed} = $null
+                ${script:syncconfirmation} = $null
+                ${script:sync_check} = $null
+                Start-Sleep -Seconds 2
+                return
+            }
+        }
+    }
+    elseif ($syncconfirmation -eq &quot;q&quot;)
+    {
+        ${script:syncoptions} = $null
+        ${script:syncpassed} = $null
+        ${script:syncconfirmation} = $null
+        ${script:sync_check} = $null
+        log -logtype 1 -logMessage &quot;Log: FileSync aborted&quot;
+        Write-Host &quot;`nAborted. Going back to Menu in 1 second...&quot; -ForegroundColor Red
+        Start-Sleep -Seconds 1
+        return
+    }
+    else
+    {
+        ${script:syncoptions} = $null
+        ${script:syncpassed} = $null
+        ${script:syncconfirmation} = $null
+        ${script:sync_check} = $null
+        log -logtype 1 -logMessage &quot;Log: Invalid sync confirmation in FileSync. Returning to FileSync Menu&quot;
+        Write-Host &quot;Invalid input! Returning to FileSync Menu.&quot; -ForegroundColor Red
+        Start-Sleep -Seconds 2
+        return
+    }
+}
+function FileSync {
+    # This function performs file synchronization based on the user's choices.
+    # It executes the appropriate robocopy command prepared by the PreSync function.
+    # After the synchronization, it checks the exit code of the robocopy command and informs the user about the result.
+    param (
+        [string]$run_what,
+        [string]$write_what
+    )
+    Clear-Host
+    log -logtype 1 -logMessage &quot;Log: FileSync: Confirming to Sync with $write_what&quot;
+    Write-Host &quot;You are about to sync with the following Options:`n`n$write_what&quot;
+    $sync_check = Read-Host &quot;`n`nAre you sure you want to proceed? (y)&quot;
+    if ( $sync_check -eq &quot;y&quot; )
+    {
+        log -logtype 1 -logMessage &quot;Log: FileSync: Syncing started&quot;
+        Write-Host &quot;Proceeding with the sync. This may take a while.&quot;
+        Write-Host &quot;Warning: Do not close the script during the sync!&quot; -ForegroundColor Red
+        Invoke-Expression $run_what
+        $syncpassed = $LASTEXITCODE
+        log -logtype 1 -logMessage &quot;Log: FileSync: Syncing finished&quot;
+    }
+    else
+    {
+        log -logtype 1 -logMessage &quot;Log: FileSync: Syncing aborted&quot;
+        Write-Host &quot;`nAborted. Going back to Menu in 1 second...&quot; -ForegroundColor Red
+        Start-Sleep -Seconds 1
+        return
+    }
+    switch ( $syncpassed )
+    {
+        0 {
+            Write-Host &quot;No files were copied. No failure was encountered. No files were mismatched. The files already exist in the destination directory; therefore, the copy operation was skipped.&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;No files were copied. No failure was encountered. No files were mismatched. The files already exist in the destination directory; therefore, the copy operation was skipped.&quot;
+        }
+        1 {
+            Write-Host &quot;All files were copied successfully.&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;All files were copied successfully.&quot; 
+        }
+        2 {
+            Write-Host &quot;There are some additional files in the destination directory that aren't present in the source directory. No files were copied.&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;There are some additional files in the destination directory that aren't present in the source directory. No files were copied.&quot;
+        }
+        3 {
+            Write-Host &quot;Some files were copied. Additional files were present. No failure was encountered.&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;Some files were copied. Additional files were present. No failure was encountered.&quot;
+        }
+        5 {
+            Write-Host &quot;Some files were copied. Some files were mismatched. No failure was encountered.&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;Some files were copied. Some files were mismatched. No failure was encountered.&quot;
+        }
+        6 {
+            Write-Host &quot;Additional files and mismatched files exist. No files were copied and no failures were encountered meaning that the files already exist in the destination directory.&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;Additional files and mismatched files exist. No files were copied and no failures were encountered meaning that the files already exist in the destination directory.&quot;
+        }
+        7 {
+            Write-Host &quot;Files were copied, a file mismatch was present, and additional files were present.&quot; -ForegroundColor Red
+            log -logtype 1 -logMessage &quot;Files were copied, a file mismatch was present, and additional files were present.&quot;
+        }
+        8 {
+            Write-Host &quot;Several files didn't copy.&quot; -ForegroundColor Red
+            log -logtype 1 -logMessage &quot;Several files didn't copy.&quot;
+        }
+        default {
+            Write-Host &quot;An unknown error occurred. Please reffer to the log file for more information.&quot; -ForegroundColor Red
+            log -logtype 1 -logMessage &quot;Log: File Sync: An unknown error occurred.&quot;
+        }
+    }
+    ${script:syncoptions} = $null
+    ${script:syncpassed} = $null
+    ${script:syncconfirmation} = $null
+    ${script:sync_check} = $null
+    Read-Host &quot;`nPress Enter to return to menu...&quot;
+}
+function printlog
+{
+    # This function prints the log file to the console.
+    Clear-Host
+    Get-Content -Path $logFilePath | Out-Host
+    Read-Host &quot;`nPress Enter to return to menu...&quot;
+}
+function printSourceCode
+{
+    # This function provides help information to the user.
+    Clear-Host
+    Write-Host &quot;This script is on GitHub! You can find it here: https://github.com/An0n-00/FileSync`n&quot;
+    Write-Host &quot;Don't forget to read this handy documentation: https://github.com/An0n-00/FileSync/blob/master/README.md`n&quot;
+    Read-Host &quot;`nPress Enter to return to menu...&quot;
+}
+function startup
+{
+    # This function performs startup checks.
+    # It checks if the temp folder, log file, error log file, and settings file exist.
+    # If any of them does not exist, it creates them.
+    # It also checks if the source and destination paths are valid.
+    # If any of them is not valid, it asks the user to enter a new one.
+    if ( Test-Path -Path $Tempfolder )
+    {
+        #Do nothing, it exists
+    }
+    else
+    {
+        Write-Host &quot;This script is designed to sync files from one folder to another with other options like logging and reconfiguring the source and destination path and many more.`n&quot;
+        Read-Host &quot;Press Enter to continue...&quot;
+        setup -options 1
+        startup
+    }
+    log -logtype 1 -logMessage &quot;Log: Startup started&quot;
+    Write-Host &quot;Checking Tempfolder...&quot;  -NoNewline
+    if ( Test-Path -Path $Tempfolder )
+    {
+        Write-Host &quot;Success!&quot; -ForegroundColor Green
+        Write-Host &quot;Checking Logfile...&quot; -NoNewline
+        #Check if the Logfile exists
+        if ( Test-Path -Path &quot;$Tempfolder\FileSync.log&quot; )
+        {
+            Write-Host &quot;Success!&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;Log: Logfile exists&quot;
+        }
+        else
+        {
+            Write-Host &quot;Error. Fixing&quot; -ForegroundColor Red
+            setup -options 4
+            startup
+        }
+        #Check if the ErrorLogfile exists
+        Write-Host &quot;Checking Logfile...&quot; -NoNewline
+        if ( Test-Path -Path &quot;$Tempfolder\ErrorLog.log&quot; )
+        {
+            Write-Host &quot;Success!&quot; -ForegroundColor Green
+            log -logtype 1 -logMessage &quot;Log: ErrorLogfile exists&quot;
+        }
+        else
+        {
+            Write-Host &quot;Error. Fixing&quot; -ForegroundColor Red
+            log -logtype 1 -logMessage &quot;Error: Logfile does not exist. Creating new one&quot;
+            setup -options 5
+            startup
+        }
+        log -logtype 1 -logMessage &quot;Log: Tempfolder exists. Checking for settings file&quot;
+        #Check if settings file exists
+        Write-Host &quot;Checking Settings...&quot; -NoNewline
+        if ( Test-Path -Path &quot;$Tempfolder\settings.dll&quot; )
+        {
+            log -logtype 1 -logMessage &quot;Log: Settings file exists.&quot;
+            try
+            {
+                log -logtype 1 -logMessage &quot;Log: Reading settings file&quot;
+                $content = Get-Content -Path &quot;$Tempfolder\settings.dll&quot;
+                if ( -not ($content[2] -match &quot;Sourcepath =&quot; ) )
+                {
+                    Write-Host &quot;Error!&quot; -ForegroundColor Red
+                    log -logtype 2 -logMessage &quot;Error: Settings file is corrupted. Creating new Settings file.&quot;
+                    setup -options 1 -corrupted 1
+                }
+                elseif (-not ($content[3] -match &quot;Destinationpath =&quot; ))
+                {
+                    Write-Host &quot;Error!&quot; -ForegroundColor Red
+                    log -logtype 2 -logMessage &quot;Error: Settings file is corrupted. Creating new Settings file&quot;
+                    setup -options 1 -corrupted 1
+                }
+                foreach ( $line in $content )
+                {
+                    if ( $line -match &quot;Sourcepath = (.*)&quot; )
+                    {
+                        ${script:Sourcepath} = $Matches[1]
+                    }
+                    elseif ($line -match &quot;Destinationpath = (.*)&quot;)
+                    {
+                        ${script:Destinationpath} = $Matches[1]
+                    }
+                }
+                log -logtype 1 -logMessage &quot;Log: Settings read successfully. Starting to validate paths&quot;
+                if ( (Test-Path -Path $Sourcepath) -or ($null -eq $Sourcepath) )
+                {
+                    log -logtype 1 -logMessage &quot;Log: Read sourcepath is valid&quot;
+                    if ( (Test-Path -Path $Destinationpath)  -or ($null -eq $Sourcepath) )
+                    {
+                        log -logtype 1 -logMessage &quot;Log: Read Destinationpath is valid&quot;
+                        Write-Host &quot;Success!&quot; -ForegroundColor Green
+                        log -logtype 1 -logMessage &quot;Log: Startup finished successfully&quot;
+                        Start-Sleep -Seconds 1
+                        return
+                    }
+                    else
+                    {
+                        log -logtype 1 -logMessage &quot;Log: Destinationpath is invalid. Jumping to setup -options 2 to set a new one&quot;
+                        write-host &quot;Destinationpath is invalid. Please set a new one&quot; -ForegroundColor Red
+                        setup -options 2
+                        startup
+                    }
+                }
+                else
+                {
+                    log -logtype 1 -logMessage &quot;Log: Sourcepath is invalid. Jumping to setup -options 3 to set a new one&quot;
+                    write-host &quot;Sourcepath is invalid. Please set a new one.&quot; -ForegroundColor Red
+                    setup -options 3
+                    startup
+                }
+            }
+            catch
+            {
+                Write-Host &quot;Tried to read the settings file, but failed. Overwriting ALL past Files (including log files).&quot; -ForegroundColor Red
+                setup -options 1
+                startup
+            }
+        }
+        else
+        {
+            Write-Host &quot;Settings file not found. Overwriting ALL past Files (including log files).&quot; -ForegroundColor Red
+            setup -options 1
+            startup
+        }
+    }
+}
+function setup
+{
+    # This function performs setup tasks based on the given options.
+    # The options include creating the temp folder, log file, error log file, and settings file,
+    # and setting new source and destination paths.
+    param(
+        [int]$options,
+        [int]$corrupted
+    )
+    switch ( $options )
+    {
+        1 {
+            try
+            {
+                log -logtype 1 -logMessage &quot;Log: Creating the Files and Settings. Running Setup -options 1&quot;
+                Write-Host &quot;Setting up Tempfolder...&quot;  -NoNewline
+                if ( -not (Test-Path -Path $Tempfolder ) )
+                {
+                    New-Item -Path $Tempfolder -ItemType Directory -Force | Out-Null
+                    log -logtype 1 -logMessage &quot;Log: Created Tempfolder. Running Setup -options 1&quot;
+                }
+                else
+                {
+                    log -logtype 1 -logMessage &quot;Log: Tempfolder already exists. Running Setup -options 1&quot;
+                }
+                Write-Host &quot;Success!&quot; -ForegroundColor Green
+                Write-Host &quot;Setting up Logfiles...&quot; -NoNewline
+                #Logfile
+                setup -options 4
+                #ErrorLogfile
+                setup -options 5
+                Write-Host &quot;Success!&quot; -ForegroundColor Green
+                Write-Host &quot;Setting up Settings...&quot; -NoNewline
+                #Settings file
+                if ( -not (Test-Path -Path $settingsFilePath ) -or ($corrupted -eq 1 ) )
+                {
+                    New-Item -Path $settingsFilePath -ItemType File -Force -Value &quot;# $ProjectName $ProjectVersion`n# DO NOT EDIT THIS FILE`nSourcepath = $sourcepath`nDestinationpath = $destinationpath&quot;| Out-Null
+                    log -logtype 1 -logMessage &quot;Log: Created Settings file&quot;
+                    setup -options 3
+                    setup -options 2
+                }
+                else
+                {
+                    log -logtype 1 -logMessage &quot;Log: Settings file already exists. Running Setup -options 1&quot;
+                }
+                Write-Host &quot;Success!&quot; -ForegroundColor Green
+            }
+            catch
+            {
+                log -logtype 2 -logMessage = &quot;Error: Creating the Files and Settings failed. Overwriting!&quot;
+                Write-Host &quot;Error: Creating the Files and Settings failed. Overwriting! Restarting in 3 seconds...&quot;
+                Start-Sleep -Seconds 3
+                setup -options 1
+            }
+            log -logtype 1 -logMessage &quot;Log: Setup -options 1 successfully finished&quot;
+            Write-Host &quot;Setup finished successfully.&quot; -ForegroundColor Green
+        }
+        2 {
+            # Destination path
+            do
+            {
+                log -logtype 1 -logMessage &quot;Log: Setting new destinationpath. Running Setup -options 2&quot;
+                ${script:Destinationpath} = Read-Host &quot;`nPlease enter the new destinationpath&quot;
+                $isValidPath = -not ($null -eq $Destinationpath) -and (Test-Path ${script:Destinationpath} ) -and (${script:Destinationpath}.Trim( ) -ne &quot;&quot; ) -and (${script:Destinationpath} -ne ${script:Sourcepath} )
+                if ( -not $isValidPath )
+                {
+                    log -logtype 1 -logMessage &quot;Log: Destinationpath is invalid (${script:Destinationpath}). Running Setup -options 2&quot;
+                    Write-Host &quot;The path is not valid. Please enter a valid path.&quot;
+                }
+            } until ($isValidPath)
+            log -logtype 1 -logMessage &quot;Log: Destinationpath is valid. Trying to save to Settings. Running Setup -options 2&quot;
+            $content = Get-Content -Path $settingsFilePath
+            ForEach-Object {
+                if ( $content -match &quot;Destinationpath = (.*)&quot; )
+                {
+                    $content -replace &quot;Destinationpath = (.*)&quot;, &quot;Destinationpath = ${script:Destinationpath}&quot; | Out-File -FilePath $settingsFilePath -Force
+                }
+            }
+            log -logtype 1 -logMessage &quot;Log: Successfully saved destinationpath to settings. Running Setup -options 2&quot;
+            log -logtype 1 -logMessage &quot;Log: Setup -options 2 successfully finished&quot;
+        }
+        3 {
+            # Source path
+            do
+            {
+                log -logtype 1 -logMessage &quot;Log: Setting new sourcepath. Running Setup -options 3&quot;
+                ${script:Sourcepath} = Read-Host &quot;`nPlease enter the new sourcepath&quot;
+                $isValidPath = -not ($null -eq $Destinationpath) -and (Test-Path ${script:Sourcepath} ) -and (${script:Sourcepath}.Trim( ) -ne &quot;&quot; ) -and (${script:Destinationpath} -ne ${script:Sourcepath} )
+                if ( -not $isValidPath )
+                {
+                    log -logtype 1 -logMessage &quot;Log: Sourcepath is invalid (${script:Sourcepath}). Running Setup -options 3&quot;
+                    Write-Host &quot;The path is not valid. Please enter a valid path.&quot;
+                }
+            } until ($isValidPath)
+            log -logtype 1 -logMessage &quot;Log: Sourcepath is valid (${script:Sourcepath}). Trying to save to Settings. Running Setup -options 3&quot;
+            $content = Get-Content -Path $settingsFilePath
+            ForEach-Object {
+                if ( $content -match &quot;Sourcepath = (.*)&quot; )
+                {
+                    $content -replace &quot;Sourcepath = (.*)&quot;, &quot;Sourcepath = ${script:Sourcepath}&quot; | Out-File -FilePath $settingsFilePath -Force
+                }
+            }
+            log -logtype 1 -logMessage &quot;Log: Successfully saved sourcepath to settings. Running Setup -options 3&quot;
+            log -logtype 1 -logMessage &quot;Log: Setup -options 3 successfully finished&quot;
+        }
+        4 {
+            #Logfile
+            if ( -not (Test-Path -Path $logFilePath ) )
+            {
+                [string] $timestamp = Get-Date -Format  &quot;dd-MM-yyyy HH:mm.sss&quot;
+                New-Item -Path $logFilePath -ItemType File -Force -Value &quot;Created Logfile at $timestamp`n###################  Log start:  ###################`n&quot; | Out-Null
+                log -logtype 1 -logMessage &quot;Log: Created Logfile. Running Setup -options 4&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: Logfile already exists. Returning to original function.&quot;
+            }
+        }
+        5 {
+            #ErrorLogfile
+            if ( -not (Test-Path -Path $ErrorLogFilePath ) )
+            {
+                [string] $timestamp = Get-Date -Format  &quot;dd-MM-yyyy HH:mm.sss&quot;
+                New-Item -Path $ErrorLogFilePath -ItemType File -Force -Value &quot;Created Error Logfile at $timestamp`n###################  Error Log start:  ###################`n&quot; | Out-Null
+                log -logtype 1 -logMessage &quot;Log: Created Logfile. Running Setup -options 5&quot;
+            }
+            else
+            {
+                log -logtype 1 -logMessage &quot;Log: ErrorLogFile already exists. Returning to original function.&quot;
+            }
+        }
+    }
+}
+function log
+{
+    # This function logs messages to the log file or error log file based on the given log type.
+    param(
+        [int]$logtype,
+        [string]$logMessage
+    )
+    try
+    {
+        if ( (test-path -path $logFilePath ) -and $logtype -eq 1 )
+        {
+            [string] $timestamp = Get-Date -Format  &quot;dd-MM-yyyy HH:mm.sss&quot;
+            $logMessage = $logMessage + &quot; at $timestamp&quot;
+            $logMessage | Out-File -FilePath $logFilePath -Append -Encoding utf8
+        }
+        elseif ((test-path -path $ErrorLogFilepath ) -and $logtype -eq 2)
+        {
+            [string] $timestamp = Get-Date -Format  &quot;dd-MM-yyyy HH:mm.sss&quot;
+            $logMessage = $logMessage + &quot; at $timestamp&quot;
+            $logMessage | Out-File -FilePath $ErrorLogFilePath -Append -Encoding utf8
+        }
+    }
+    catch
+    {
+        return
+    }
+}
+function logo
+{
+    # This function prints the logo and welcome message to the console.
+    if ( Test-Path -Path $logFilePath )
+    {
+        log -logtype 1 -logMessage &quot;Log: Logo printed to console&quot;
+    }
+    clear-host
+    write-host &quot;  _____ _ _      ____
+ |  ___(_) | ___/ ___| _   _ _ __   ___
+ | |_  | | |/ _ \___ \| | | | '_ \ / __|
+ |  _| | | |  __/___) | |_| | | | | (__
+ |_|   |_|_|\___|____/ \__, |_| |_|\___|
+                       |___/
+                                            ($ProjectVersion)
+=====================================================&quot;
+    Write-Host &quot;`nWelcome to FileSync!`n&quot;
+    Write-Host &quot;Booting FileSync&quot; -NoNewline
+    [int] $i = 0
+    do
+    {
+        $i++
+        Start-Sleep -Seconds 1
+        Write-Host &quot;.&quot; -NoNewline
+    }until ($i -eq 3)
+    Write-Host &quot;`n&quot;
+}
+function main
+{
+    # This is the main function of the script.
+    # It calls the logo function, startup function, and menu function in order.
+    Clear-Host
+    if ( Test-Path -Path $logFilePath )
+    {
+        log -logtype 1 -logMessage &quot;Start: FileSync started&quot;
+    }
+    logo
+    startup
+    menu
+}
+#Main
+try
+{
+    main
+}
+catch
+{
+    log -logtype 1 -logMessage &quot;Fatal Error: FileSync crashed. See newest error log for details.&quot;
+    log -logtype 2 -logMessage &quot;CRASH: FileSync crashed. `nError Message: $($_.Exception.ToString( ) )`n`n&quot;
+    Write-Host &quot;Critical Error: FileSync crashed. See log for details.`nRead the error log for more details: $ErrorLogFilePath&quot; -ForegroundColor Red
+    Read-Host &quot;Press Enter to return to menu...&quot;
+    do
+    {
+        main
+    }until (0 -eq 1)
+}
+</div><div class="last-modified">Last modified: 15 March 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="documentation.html" class="navigation-links__prev">Documentation</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.6.6-b224/app.js"></script></body></html>
