@@ -30,7 +30,7 @@ To start using FileSync, follow these steps:
 ## Contributing
 Contributions are welcome! If you have any suggestions, feature requests, or bug reports, please open an issue or submit a pull request.
 
-Contributers: 
+### Contributers: 
 
 <a href="https://github.com/an0n-00/FileSync/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=an0n-00/FileSync" />
