@@ -30,5 +30,9 @@ To start using FileSync, follow these steps:
 ## Contributing
 Contributions are welcome! If you have any suggestions, feature requests, or bug reports, please open an issue or submit a pull request.
 
+<a href="https://github.com/an0n-00/FileSync/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=an0n-00/FileSync" />
+</a>
+
 ## License
 This project is dedicated to the public domain under the [Unlicense.](https://github.com/An0n-00/FileSync/blob/main/LICENSE)
