@@ -1,3 +1,4 @@
+
 #Autor: [redacted]
 #Date: [redacted]
 #Description: This is a script to sync files from one folder to another with other options like logging and reconfiguring the source and destination path. This script is designed to sync files from one folder to another with other options like logging and reconfiguring the source and destination path. The script provides a menu for the user to choose from various options such as syncing now, viewing current configuration, reconfiguring, opening log, and help. The user can also choose to remove all information or exit the script. The script uses the robocopy command for file synchronization.
@@ -754,6 +755,7 @@ function log {
         return
     }
 }
+
 function logo {
     # This function prints the logo and welcome message to the console.
     log -logtype 1 -logMessage "Log: Logo printed to console"
